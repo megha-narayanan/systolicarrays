@@ -2,6 +2,7 @@
 
 ## TITLE
 **Systolic Arrays for LLM Inference: Parallel Efficiency of Prefill vs. Decode on a Parameterized INT8 Accelerator**
+
 Raj Methi and Megha Narayanan
 
 ## URL
