@@ -7,9 +7,16 @@ COLS ?= 8
 BUILD := $(CURDIR)/build
 VFLAGS := -Wall --cc --exe --build -j 0 -O2 --x-assign unique --x-initial unique
 
-.PHONY: all test lint test_pe test_top clean
+.PHONY: all test lint test_golden test_pe test_top clean
 all: lint test
-test: test_pe test_top
+test: test_golden test_pe test_top
+
+# Golden model unit tests: plain C++17, no Verilator needed.
+GOLDEN_CXXFLAGS := -std=c++17 -Wall -Wextra -O2
+test_golden:
+	mkdir -p "$(BUILD)/golden"
+	$(CXX) $(GOLDEN_CXXFLAGS) -o "$(BUILD)/golden/test_golden" tb/test_golden.cpp
+	"$(BUILD)/golden/test_golden"
 
 lint:
 	$(VERILATOR) --lint-only -Wall --top-module pe rtl/pe.sv
